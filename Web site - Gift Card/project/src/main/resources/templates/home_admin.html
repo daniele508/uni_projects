@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <title>Home</title>
+</head>
+<body>
+    <a class="btn btn-outline-primary" href="http://localhost:8080/logout">Logout</a>
+    <div class="container">
+        <h3 class="display-3">
+            Benvenuto <strong><span th:text="${nome}"/> <span th:text="${cognome}"/></strong>!
+        </h3>
+        <h4 class="display-4">Seleziona un'operazione disponibile</h4>
+        <input class="btn btn-primary" type="button" value="Visualizza saldo" onclick="location.href='http://localhost:8080/admin/request-saldo'"/>
+        <input class="btn btn-primary" type="button" value="Attiva/Disattiva carta" onclick="location.href='http://localhost:8080/admin/request-numero'"/>
+        <input class="btn btn-primary" type="button" value="Crea nuova carta" onclick="location.href='http://localhost:8080/admin/request-username'"/>
+        <input class="btn btn-primary" type="button" value="Visualizza lista movimenti" onclick="location.href='http://localhost:8080/admin/movimenti'"/>
+    </div>
+</body>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    function validate(){
+      var check = true;
+      var numero = document.credito.numero.value;
+      var quantita = document.credito.quantita.value;
+      errori = document.getElementById("errori");
+      errori.innerHTML="";
+
+      if (errori.hasChildNodes()) {  
+        errori.removeChild(errori.firstElementChild);
+      }
+
+      var ul = document.createElement("ul");
+
+      numero=numero.replaceAll(" ", '');
+
+      if (isNaN(numero)){
+        var li = ul.appendChild(document.createElement("li"));
+        li.appendChild(document.createTextNode("Inserire un numero di carta valido"))
+        check=false;
+      }
+      else
+        if(numero.length!=16){
+          var li = ul.appendChild(document.createElement("li"));
+          li.appendChild(document.createTextNode("Il numero deve essere di 16 cifre"));
+          check=false;
+        }
+      
+      if(quantita<=0){
+        var li = ul.appendChild(document.createElement("li"));
+        li.appendChild(document.createTextNode("L'importo deve essere maggiore di 0"));
+        check=false;
+      }
+
+      if(!check){
+        errori.innerHTML="Sono stati riscontrati i seguenti errori:"
+        errori.appendChild(ul);
+      }
+      return check;
+    }
+  </script>
+
+  <title>Richiesta importo</title>
+</head>
+<body>
+  <input class="btn btn-outline-primary" type="button" value="Home" onclick="location.href='http://localhost:8080/negoziante/home'"/>
+  <div class="container">
+    <div class="alert alert-danger" th:if="${testo}!=null" th:text="${testo}"/>
+
+    <h1 class="display-3">Compilare i dati</h1>
+
+    <form name="credito" action='#' th:action="@{/negoziante/credit}" method="post" onsubmit="return validate()">
+      <div class="mb-3">
+        <label class="form-label" for="numero">Numero carta: </label>
+        <input class="form-control" id="numero" type='text' name="numero" required/>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label" for="quantita" >Importo: </label> 
+        <input class="form-control" id="quantita" type="number" name="quantita" step="0.01" required/>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="carica" name="op" value="carica" checked="checked"/>
+        <label class="form-check-label" for="carica">Accredito</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="scarica" name="op" value="scarica"/>
+        <label class="form-check-label" for="scarica">Addebito</label>
+      </div>
+
+      <br/>
+      <input class="btn btn-primary" type="submit" value="Continua"/> 
+    </form>
+    <div>
+      <p class="p-3 text-danger" id="errori"></p>
+    </div>
+  </div>
+</body>
+</html>
